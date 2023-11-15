@@ -1,79 +1,46 @@
-// shims
-import '@sinonjs/text-encoding'
-import 'react-native-get-random-values'
-import '@ethersproject/shims'
-import 'cross-fetch/polyfill'
-// filename: App.tsx
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import Scanner from "./src/screens/Scanner";
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from "@react-navigation/stack";
+import Home from "./src/screens/Home";
+import ScannerHome from "./src/screens/ScannerHome";
 
-// ... shims
+import { NavigationContainer } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, View, Text, Button } from 'react-native'
+export type RootStackParamList = {
+  Scanner: undefined;
+  ScannerHome: { url: any } | undefined;
+  Home: undefined;
+};
 
-// Import the agent from our earlier setup
-import { agent } from './setup'
-// import some data types:
-import { DIDResolutionResult, IIdentifier } from '@veramo/core'
+const Stack = createStackNavigator<RootStackParamList>();
 
-const App = () => {
-  const [identifiers, setIdentifiers] = useState<IIdentifier[]>([])
-  const [resolutionResult, setResolutionResult] = useState<DIDResolutionResult | undefined>()
+export type StackNavigation = StackNavigationProp<RootStackParamList>;
 
-  // Resolve a DID
-  const resolveDID = async (did: string) => {
-    const result = await agent.resolveDid({ didUrl: did })
-    console.log(JSON.stringify(result, null, 2))
-    setResolutionResult(result)
-  }
-
-  // Add the new identifier to state
-  const createIdentifier = async () => {
-    const _id = await agent.didManagerCreate({
-      provider: 'did:ethr:goerli',
-    })
-    setIdentifiers((s) => s.concat([_id]))
-  }
-
-  // Check for existing identifers on load and set them to state
-  useEffect(() => {
-    const getIdentifiers = async () => {
-      const _ids = await agent.didManagerFind()
-      setIdentifiers(_ids)
-
-      // Inspect the id object in your debug tool
-      console.log('_ids:', _ids)
-    }
-
-    getIdentifiers()
-  }, [])
-
+function App() {
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={{ padding: 20 }}>
-          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Identifiers</Text>
-          <Button onPress={() => createIdentifier()} title={'Create Identifier'} />
-          <View style={{ marginBottom: 50, marginTop: 20 }}>
-            {identifiers && identifiers.length > 0 ? (
-              identifiers.map((id: IIdentifier) => (
-                <Button onPress={() => resolveDID(id.did)} title={id.did} key={id.did} />
-              ))
-            ) : (
-              <Text>No identifiers created yet</Text>
-            )}
-          </View>
-          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Resolved DID document:</Text>
-          <View style={{ marginBottom: 50, marginTop: 20 }}>
-            {resolutionResult ? (
-              <Text>{JSON.stringify(resolutionResult.didDocument, null, 2)}</Text>
-            ) : (
-              <Text>tap on a DID to resolve it</Text>
-            )}
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  )
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="ScannerHome">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Scanner" component={Scanner} />
+        <Stack.Screen name="ScannerHome" component={ScannerHome} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
-export default App
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+export default App;
