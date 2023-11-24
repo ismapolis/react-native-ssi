@@ -1,3 +1,8 @@
+// shims
+import "@sinonjs/text-encoding";
+import "@ethersproject/shims";
+import "cross-fetch/polyfill";
+
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
@@ -8,9 +13,7 @@ import {
 } from "@react-navigation/stack";
 import Home from "./src/screens/Home";
 import ScannerHome from "./src/screens/ScannerHome";
-
 import { NavigationContainer } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
   Scanner: undefined;
