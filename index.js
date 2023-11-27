@@ -1,7 +1,9 @@
+import "./shim";
 import "reflect-metadata"; // needed for migrations
 import "@ethersproject/shims";
 import "react-native-gesture-handler";
-import crypto from "isomorphic-webcrypto";
+import crypto from "@sphereon/isomorphic-webcrypto";
+import stream from "stream-browserify";
 // if (typeof BigInt === 'undefined') global.BigInt = require('big-integer')
 import { registerRootComponent } from "expo";
 

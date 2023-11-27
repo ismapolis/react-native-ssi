@@ -3,9 +3,8 @@ import "@sinonjs/text-encoding";
 import "@ethersproject/shims";
 import "cross-fetch/polyfill";
 
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet } from "react-native";
 import Scanner from "./src/screens/Scanner";
 import {
   StackNavigationProp,

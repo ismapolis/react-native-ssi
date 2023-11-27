@@ -75,6 +75,7 @@ const privateKeyStore = new PrivateKeyStore(
   new SecretBox(DB_ENCRYPTION_KEY)
 );
 
+/*
 // we need to overwrite the import values because sphereon is using the old ones
 (privateKeyStore as unknown as AbstractPrivateKeyStore).import =
   privateKeyStore.importKey;
@@ -89,7 +90,7 @@ const store = new KeyStore(dbConnection);
 (store as unknown as AbstractKeyStore).import = store.importKey;
 (store as unknown as AbstractKeyStore).delete = store.deleteKey;
 (store as unknown as AbstractKeyStore).list = store.listKeys;
-
+*/
 // ... imports & CONSTANTS & DB setup
 
 // Veramo agent setup
@@ -98,11 +99,9 @@ export const agent = createAgent<
 >({
   plugins: [
     new SphereonKeyManager({
-      store: store as unknown as AbstractKeyStore,
+      store: new KeyStore(dbConnection),
       kms: {
-        local: new SphereonKeyManagementSystem(
-          privateKeyStore as unknown as AbstractPrivateKeyStore
-        ),
+        local: new SphereonKeyManagementSystem(privateKeyStore),
       },
     }),
     new DIDManager({
