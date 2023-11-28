@@ -6,7 +6,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "postinstall": "rn-nodeify --install os,fs,path,assert,buffer,process,stream,vm --hack && patch-package",
+    "postinstall": "./node_modules/.bin/rn-nodeify --hack --install",
     "fix:doctor": "npx expo install --check"
   },
   "dependencies": {

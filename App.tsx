@@ -12,6 +12,9 @@ import {
 import Home from "./src/screens/Home";
 import ScannerHome from "./src/screens/ScannerHome";
 import { NavigationContainer } from "@react-navigation/native";
+import { Logs } from "expo";
+
+Logs.enableExpoCliLogging();
 
 export type RootStackParamList = {
   Scanner: undefined;

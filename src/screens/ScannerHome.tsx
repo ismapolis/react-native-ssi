@@ -17,13 +17,8 @@ import { v4 } from "uuid";
 import { agent } from "../../setup";
 import { getJWKfromHex } from "../utils";
 import { Key } from "@sphereon/ssi-sdk-ext.key-utils";
-import { Logs } from "expo";
-import debug from "debug";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ScannerHome">;
-
-Logs.enableExpoCliLogging();
-debug.enable("*");
 
 export default function ScannerHome({ route, navigation }: Props) {
   const [urlText, setUrlText] = React.useState("Issuer URL");
