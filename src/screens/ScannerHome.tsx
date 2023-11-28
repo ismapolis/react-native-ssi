@@ -17,8 +17,13 @@ import { v4 } from "uuid";
 import { agent } from "../../setup";
 import { getJWKfromHex } from "../utils";
 import { Key } from "@sphereon/ssi-sdk-ext.key-utils";
+import { Logs } from "expo";
+import debug from "debug";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ScannerHome">;
+
+Logs.enableExpoCliLogging();
+debug.enable("*");
 
 export default function ScannerHome({ route, navigation }: Props) {
   const [urlText, setUrlText] = React.useState("Issuer URL");
@@ -31,6 +36,7 @@ export default function ScannerHome({ route, navigation }: Props) {
   }, [route.params?.url]);
 
   const requestCredential = async () => {
+    console.log("Initiating request");
     const client = await OpenID4VCIClient.fromURI({
       uri: urlText,
       clientId: "test-clientID",
@@ -45,6 +51,7 @@ export default function ScannerHome({ route, navigation }: Props) {
 
     const options = { type: Key.Secp256k1 };
     const identifier = await agent.didManagerCreate({ options });
+    setCredential(identifier.did);
     const kid = identifier.keys[0].kid;
     const privateKeyHex = await agent.keyManagerGet({ kid });
     console.log(`PrivateKeyHex: ${privateKeyHex}`);

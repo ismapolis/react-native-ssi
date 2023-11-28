@@ -5,7 +5,9 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "rn-nodeify --install os,fs,path,assert,buffer,process,stream,vm --hack && patch-package",
+    "fix:doctor": "npx expo install --check"
   },
   "dependencies": {
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
@@ -16,7 +18,6 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
     "@sinonjs/text-encoding": "^0.7.2",
-    "@sphereon/isomorphic-webcrypto": "^2.4.0-unstable.4",
     "@sphereon/oid4vci-client": "^0.8.1",
     "@sphereon/oid4vci-issuer": "^0.8.1",
     "@sphereon/ssi-sdk-ext.did-provider-jwk": "^0.15.0",
@@ -54,8 +55,7 @@
     "expo-standard-web-crypto": "^1.7.0",
     "expo-status-bar": "~1.6.0",
     "https-browserify": "^0.0.1",
-    "jose": "^5.1.1",
-    "node": "^21.1.0",
+    "jose": "^5.1.2",
     "path-browserify": "^0.0.0",
     "process": "^0.11.10",
     "punycode": "^1.4.1",
@@ -80,6 +80,7 @@
     "react-native-webview": "13.2.2",
     "react-native-webview-crypto": "^0.0.25",
     "readable-stream": "^1.0.33",
+    "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "string_decoder": "^0.10.31",
     "text-encoding": "^0.7.0",

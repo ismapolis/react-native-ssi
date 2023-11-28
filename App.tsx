@@ -1,8 +1,7 @@
 // shims
 import "@sinonjs/text-encoding";
-import "@ethersproject/shims";
+//import "@ethersproject/shims";
 import "cross-fetch/polyfill";
-
 import React from "react";
 import { StyleSheet } from "react-native";
 import Scanner from "./src/screens/Scanner";
